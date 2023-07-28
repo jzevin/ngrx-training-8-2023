@@ -1,0 +1,49 @@
+<ng-container *ngIf="currentSlide">
+  <div
+    class="slide"
+    *ngIf="getQuizData() as quiz"
+    [ngClass]="{ quiz: showQuiz }"
+  >
+    <div class="quiz-content">
+      <div class="quiz">
+        <div class="question">{{ quiz.question }}</div>
+        <ol class="options" (click)="onRevealAnswer()">
+          <li
+            class="option"
+            [ngClass]="{
+              answer: quiz.answer === option && revealAnswer
+            }"
+            *ngFor="let option of quiz.options"
+          >
+            {{ option }}
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="content">
+      <h1 class="title">{{ currentSlide.title }}</h1>
+      <ng-container
+        *ngFor="let contentItem of currentSlide.contents; index as i"
+      >
+        <ng-container *ngIf="contentItem.type === 'text'">
+          <p [class]="contentItem.role">{{ contentItem.content }}</p>
+        </ng-container>
+        <ng-container *ngIf="contentItem.type === 'list'">
+          <ul>
+            <li *ngFor="let listItem of contentItem.items">
+              {{ listItem.content }}
+            </li>
+          </ul>
+        </ng-container>
+        <ng-container *ngIf="contentItem.type === 'code'">
+          <pre><code class="language-typescript" [class]="'code'">{{ contentItem.code }}</code></pre>
+        </ng-container>
+        <ng-container *ngIf="contentItem.type === 'question'">
+          <!-- <p [class]="'question'">{{ contentItem.question }}</p> -->
+          <button class="quiz-btn" (click)="onShowQuiz()">Quiz!</button>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div class="counter">{{ getSlideNumberText() }}</div>
+  </div>
+</ng-container>

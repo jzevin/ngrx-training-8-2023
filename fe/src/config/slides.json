@@ -1,0 +1,174 @@
+[
+  {
+    "id": "1",
+    "title": "Introduction and overview of NgRx",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Introduction and overview of NgRx"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Welcome to the NgRx course! In this course, we will explore the core concepts of NgRx, a state management solution for Angular applications."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "What we will cover:"
+      },
+      {
+        "type": "list",
+        "listType": "unordered",
+        "items": [
+          {
+            "id": "item_1",
+            "content": "Brief history and purpose of NgRx"
+          },
+          {
+            "id": "item_2",
+            "content": "Comparison with traditional state management in Angular"
+          },
+          {
+            "id": "item_3",
+            "content": "Core principles of NgRx: Store, Actions, Reducers, Selectors, and Effects"
+          }
+        ]
+      },
+      {
+        "type": "question",
+        "question": "What are the core principles of NgRx?",
+        "options": [
+          "Store, Actions, Selectors",
+          "Store, Actions, Reducers, Selectors, and Effects",
+          "Store, Actions, Reducers",
+          "Actions, Reducers, Effects"
+        ],
+        "answer": "Store, Actions, Reducers, Selectors, and Effects"
+      }
+    ],
+    "notes": "Make sure to clarify that NgRx is based on Redux, a JavaScript library for managing and updating application state, with tools to help you write better code."
+  },
+  {
+    "id": "2",
+    "title": "Overview of Core Principles of NgRx",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Overview of Core Principles of NgRx"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Let's take a deep dive into the core principles of NgRx: Store, Actions, Reducers, Selectors, and Effects."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "NgRx Store"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "The Store is a controlled state container designed to help write performant, consistent applications on top of Angular."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "NgRx Actions"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Actions express unique events that happen throughout your application."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "NgRx Reducers"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Reducers in NgRx are responsible for handling transitions from one state to the next state in your application."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "NgRx Selectors"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Selectors are pure functions used for obtaining slices of store state."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "NgRx Effects"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Effects provide a way to interact with services or perform side-effects in response to actions."
+      },
+      {
+        "type": "question",
+        "question": "Which principle is responsible for handling transitions from one state to the next?",
+        "options": ["Actions", "Reducers", "Selectors", "Effects"],
+        "answer": "Reducers"
+      }
+    ],
+    "notes": "Try to make sure students understand the distinct responsibilities of each principle and how they work together in the NgRx ecosystem."
+  },
+  {
+    "id": "3",
+    "title": "Deep Dive: NgRx Store",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Deep Dive: NgRx Store"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "In NgRx, the Store is a single state tree and it's the heart of the NgRx ecosystem. It's a single source of truth for your application state, and its core principles are immutability and reactive state."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Why Use the NgRx Store?"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "NgRx Store provides reactive state management for Angular apps inspired by Redux. This means state is not mutated directly. Instead, new state objects are produced."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Creating a Basic Store"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "import { StoreModule } from '@ngrx/store';\n\n@NgModule({\n  imports: [\n    StoreModule.forRoot({})\n  ]\n})"
+      },
+      {
+        "type": "question",
+        "question": "What is the core principle of the NgRx Store?",
+        "options": [
+          "Mutability",
+          "Direct state mutation",
+          "Immutability and reactive state",
+          "None of the above"
+        ],
+        "answer": "Immutability and reactive state"
+      }
+    ],
+    "notes": "Explain how immutability contributes to predictable state changes and how it helps debugging and state tracking."
+  }
+]

@@ -1,0 +1,136 @@
+:host {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  padding: 4em;
+  background: #181818;
+  width: calc(100vw - 8em);
+  height: calc(100vh - 8em);
+  box-shadow: 0.25em 0.25em 0.25em hsl(0deg 0% 0% / 7%);
+  border: 1px solid hsl(0deg 0% 20% / 35%);
+  border-bottom-color: hsl(0deg 0% 0% / 35%);
+  border-right-color: hsl(0deg 0% 0% / 350%);
+  background: linear-gradient(133deg, #00000075 20%, #00000047 50%);
+}
+.counter {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.5em;
+  font-size: 0.5em;
+  opacity: 0.5;
+}
+
+.title {
+  margin-top: 0;
+  font-weight: unset;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1em;
+  font-size: 0.5em;
+  opacity: 0.35;
+}
+p {
+  &.paragraph {
+    font-weight: 200;
+  }
+  &.heading {
+    font-weight: 200;
+    font-size: 2.75em;
+    color: #6993a7;
+    // margin: -0.8em 0 0 0;
+  }
+}
+
+.content {
+  margin: 0 auto;
+  max-width: 50vw;
+  overflow-y: auto;
+}
+
+.slide {
+  .quiz-content {
+    display: none;
+  }
+  &.quiz {
+    .content {
+      filter: blur(1em);
+    }
+    .quiz-btn {
+      display: none;
+    }
+    .quiz-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+
+.quiz-btn {
+  all: unset;
+  outline: revert;
+  background: hsl(199deg 26% 53% / 25%);
+  color: #000;
+  padding: 0.5em 1em;
+  border-radius: 0.25em;
+  margin-top: 1em;
+  transform: scale(0.5);
+  &:hover {
+    cursor: pointer;
+    background: hsl(199deg 26% 53% / 100%);
+    transform: scale(0.75);
+  }
+}
+.quiz-content {
+  font-size: 2em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgb(4 34 58 / 50%);
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  .quiz {
+    max-width: 20em;
+    .question {
+      font-size: 1.25em;
+      margin-bottom: 1em;
+    }
+    .options {
+      margin-left: 1em;
+      cursor: pointer;
+    }
+    .option {
+      font: 0.75em sans-serif;
+      &.answer {
+        color: #ff9d00;
+      }
+    }
+  }
+}
+
+code {
+  font-family: "Courier New", Courier, monospace;
+  white-space: pre-wrap;
+  display: block;
+  background: linear-gradient(
+    45deg,
+    hsl(199.35deg 26.05% 53.33% / 10%),
+    transparent
+  );
+  padding: 1em;
+  border-radius: 0.25em;
+  margin: 2em 0;
+  font-weight: bold;
+  color: #008a01;
+}
