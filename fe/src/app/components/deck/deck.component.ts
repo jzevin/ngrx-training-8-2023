@@ -1,9 +1,10 @@
+import { ApiService } from 'src/app/services/api.service';
 import { QuestionContent, Slide } from 'src/types/presentation-deck';
 
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import slides from '../../../config/slides.json';
+// import slides from '../../../config/slides.json';
 
 declare const hljs: any;
 
@@ -29,23 +30,27 @@ export class DeckComponent implements OnInit {
   }
   id: string = '';
   currentSlide: Slide | null = null;
-  slides: Slide[] = slides as Slide[];
+  slides: Slide[] = [];
   showQuiz = false;
   revealAnswer = false;
   constructor(
     private el: ElementRef,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
-
-  ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get('id') || '';
-    this.currentSlide =
-      (slides as Slide[]).find((slide) => slide.id === this.id) || null;
-    if (!this.currentSlide) {
-      this.router.navigateByUrl('404');
-    }
+    private router: Router,
+    private api: ApiService
+  ) {
+    api.getSlides().subscribe((data) => {
+      this.slides = data;
+      this.id = this.route.snapshot.paramMap.get('id') || '';
+      this.currentSlide =
+        this.slides.find((slide) => slide.id === this.id) || null;
+      if (!this.currentSlide) {
+        this.router.navigateByUrl('404');
+      }
+    });
   }
+
+  ngOnInit() {}
 
   incrementSlide() {
     const currentIndex = this.slides.findIndex(
@@ -88,8 +93,6 @@ export class DeckComponent implements OnInit {
     this.showQuiz = false;
   }
   onRevealAnswer() {
-    console.log('reveal answer');
-
     this.revealAnswer = true;
   }
   getQuizData(): QuestionContent | null {
