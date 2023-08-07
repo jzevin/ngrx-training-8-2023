@@ -4,8 +4,6 @@ import { QuestionContent, Slide } from 'src/types/presentation-deck';
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-// import slides from '../../../config/slides.json';
-
 declare const hljs: any;
 
 @Component({
@@ -28,7 +26,12 @@ export class DeckComponent implements OnInit {
         break;
     }
   }
-  id: string = '';
+  @HostListener('click', ['$event']) handleClick(event: MouseEvent) {
+    if ((event.target as HTMLElement) === this.el.nativeElement) {
+      this.incrementSlide();
+    }
+  }
+  id: number = 0;
   currentSlide: Slide | null = null;
   slides: Slide[] = [];
   showQuiz = false;
@@ -41,7 +44,7 @@ export class DeckComponent implements OnInit {
   ) {
     api.getSlides().subscribe((data) => {
       this.slides = data;
-      this.id = this.route.snapshot.paramMap.get('id') || '';
+      this.id = Number(this.route.snapshot.paramMap.get('id') || '');
       this.currentSlide =
         this.slides.find((slide) => slide.id === this.id) || null;
       if (!this.currentSlide) {
@@ -100,5 +103,9 @@ export class DeckComponent implements OnInit {
       (item) => item.type === 'question'
     );
     return found && found.length > 0 ? (found[0] as QuestionContent) : null;
+  }
+
+  isQuizAnswer(options: string[], option: string, answerIndex: number) {
+    return answerIndex === options.findIndex((o) => option === o);
   }
 }

@@ -134,3 +134,34 @@ code {
   font-weight: bold;
   color: #008a01;
 }
+
+.img-wrap {
+  width: 100%;
+  text-align: center;
+  img {
+    &.xs {
+      max-width: 2em;
+    }
+    &.sm {
+      max-width: 6em;
+    }
+    &.full-width {
+      width: 100%;
+    }
+    &.w75 {
+      width: 75%;
+    }
+    &.w50 {
+      width: 50%;
+    }
+    &.w25 {
+      width: 25%;
+    }
+    &.w10 {
+      width: 10%;
+    }
+    &.w5 {
+      width: 5%;
+    }
+  }
+}

@@ -1,17 +1,14 @@
 <ng-container *ngIf="currentSlide">
-  <div
-    class="slide"
-    *ngIf="getQuizData() as quiz"
-    [ngClass]="{ quiz: showQuiz }"
-  >
-    <div class="quiz-content">
+  <div class="slide" [ngClass]="{ quiz: showQuiz }">
+    <div class="quiz-content" *ngIf="getQuizData() as quiz">
       <div class="quiz">
         <div class="question">{{ quiz.question }}</div>
         <ol class="options" (click)="onRevealAnswer()">
           <li
             class="option"
             [ngClass]="{
-              answer: quiz.answer === option && revealAnswer
+              answer:
+                isQuizAnswer(quiz.options, option, quiz.answer) && revealAnswer
             }"
             *ngFor="let option of quiz.options"
           >
@@ -41,6 +38,15 @@
         <ng-container *ngIf="contentItem.type === 'question'">
           <!-- <p [class]="'question'">{{ contentItem.question }}</p> -->
           <button class="quiz-btn" (click)="onShowQuiz()">Quiz!</button>
+        </ng-container>
+        <ng-container *ngIf="contentItem.type === 'image'">
+          <div class="img-wrap">
+            <img
+              [src]="contentItem.src"
+              [alt]="contentItem.alt"
+              [class]="contentItem.class"
+            />
+          </div>
         </ng-container>
       </ng-container>
     </div>

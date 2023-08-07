@@ -1,62 +1,78 @@
-# NgRx Beginner's Course
+## Introduction (20 mins)
 
-## Introduction and overview of NgRx (30 minutes)
+- What is state management and why it's useful
+- Brief history of Redux and NgRx
+- Key benefits of NgRx
 
-- Brief history and purpose of NgRx.
-- Comparison with traditional state management in Angular.
-- Core principles of NgRx: Store, Actions, Reducers, Selectors, and Effects.
-- Explanation of reactive programming in relation to NgRx.
+## Core Concepts Overview (40 mins)
 
-## Deep dive into NgRx Store (1 hour)
+- Immutability
+  - Definition and benefits
+  - Strategies in JavaScript
+- Store
+  - Single source of truth
+  - Manages state as observable
+  - Dispatches actions
+  - Registers reducers
+- Actions
+  - Events describing state changes
+  - Payload carries metadata
+  - Unique types for traceability
+- Reducers
+  - Pure functions defining transitions
+  - Spread syntax for immutable update
+  - Handle actions by type
+  - Initial state
+- Selectors
+  - Derive/transform data from state
+  - Efficient recomputation
+  - Parameterization and composition
 
-- Explanation of the store, its functionality, and the state tree.
-- Creating a basic store with simple state.
-- Injecting the store into components.
-- Displaying data from the store.
-- Discussing immutability in the store.
+## Core Concepts 1 - Store - Hands-On #1 - Convert to NgRx Store (45 mins)
 
-## Working with NgRx Actions (1 hour)
+- Create store and slide deck state
+- Register root reducer
+- Populate initial state
 
-- Understanding the role of actions and their structure.
-- Creating and dispatching actions from components.
-- Updating the store with actions.
-- Working with action creators.
-- Discussing synchronous vs asynchronous actions.
+## Core Concepts 2 - Actions Hands-On #2 - Add NgRx Actions (45 mins)
 
-## Understanding NgRx Reducers (1 hour)
+- Define slide deck actions
+- Dispatch for navigation
+- Handle in reducers
 
-- Role of reducers in state management.
-- Creating a basic reducer.
-- Handling different actions in the reducer.
-- Complex state and handling actions.
-- Reducer composition for managing larger state.
+## Core Concepts 3 - Actions Hands-On #3 - Reducers (45 mins)
 
-## Making use of NgRx Selectors (15 minutes)
+## Core Concepts 4 - Hands-On #4 - Implement Selectors (30 mins)
 
-- Purpose of selectors and their benefits.
-- Creating selectors.
-- Using selectors in components.
-- Composing selectors for complex state.
+- Create/use selectors to power view
+- Memoize selectors
 
-## Working with NgRx Effects (1 hour)
+## Core Concepts 5 - Effects - Hands-On #5 - Migrate Data Loading (45 mins)
 
-- Understanding the role of effects and how they differ from reducers.
-- Creating a basic effect.
-- Working with async actions and effects.
-- Error handling with effects.
-- Using third-party APIs with effects.
+- Create effect to load slides
+- Migrate data load to effect
 
-## Conclusion and Next Steps (15 minutes)
+## Advanced Concepts (20 mins)
 
-- Summarizing the covered topics.
-- Discussing common pitfalls and best practices.
-- How to keep learning and improving NgRx skills.
-- Answering any remaining questions and clarifying doubts.
+- Entity, router store, meta reducers
 
-## Testing NgRx (If time permits - 20 minutes)
+## Best Practices (20 mins)
 
-- Overview of testing strategies with NgRx.
-- Unit testing Actions, Reducers, and Selectors.
-- Discussing testing Effects.
-- Mocking the store for testing.
-- Integration testing of NgRx.
+- NgRx best practices
+
+## Conclusion (30 mins)
+
+- Recap core concepts
+- Feature assignments
+- Q&A
+- Additional resources
+
+---
+
+---
+
+# Feature Assignments
+
+- Add undo/redo functionality
+- Secured routes
+- Settings page with additional state slice

@@ -1,6 +1,6 @@
 export interface TextContent {
   type: 'text';
-  role: 'heading' | 'paragraph' | 'subheading' | 'bullet-point';
+  role: 'heading' | 'paragraph' | 'subheading' | 'list-item';
   content: string;
 }
 
@@ -8,6 +8,7 @@ export interface ImageContent {
   type: 'image';
   src: string;
   alt: string;
+  class?: string;
 }
 
 export interface CodeContent {
@@ -19,12 +20,14 @@ export interface CodeContent {
 export interface QuestionContent {
   type: 'question';
   question: string;
-  options?: string[];
-  answer?: string;
+  options: string[];
+  answer: number;
 }
 
 export interface ListItem {
-  id: string;
+  type: 'text';
+  role: 'list-item';
+  order?: number;
   content: string;
 }
 
@@ -42,7 +45,7 @@ export type SlideContent =
   | ListContent;
 
 export interface Slide {
-  id: string;
+  id: number;
   title: string;
   contents: SlideContent[];
   notes?: string;

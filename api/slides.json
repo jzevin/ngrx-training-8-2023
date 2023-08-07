@@ -1,174 +1,504 @@
 [
   {
-    "id": "1",
-    "title": "Introduction and overview of NgRx",
+    "id": 1,
+    "title": "Introduction to NgRx",
     "contents": [
       {
         "type": "text",
         "role": "heading",
-        "content": "Introduction and overview of NgRx"
-      },
-      {
-        "type": "text",
-        "role": "paragraph",
-        "content": "Welcome to the NgRx course! In this course, we will explore the core concepts of NgRx, a state management solution for Angular applications."
+        "content": "What is state management and why it's useful?"
       },
       {
         "type": "text",
         "role": "subheading",
-        "content": "What we will cover:"
+        "content": "State management is managing data and state changes in an application"
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Useful for:"
       },
       {
         "type": "list",
         "listType": "unordered",
         "items": [
           {
-            "id": "item_1",
-            "content": "Brief history and purpose of NgRx"
+            "type": "text",
+            "role": "list-item",
+            "content": "Handling shared state between components"
           },
           {
-            "id": "item_2",
-            "content": "Comparison with traditional state management in Angular"
+            "type": "text",
+            "role": "list-item",
+            "content": "Maintaining immutability and unidirectional data flow"
           },
           {
-            "id": "item_3",
-            "content": "Core principles of NgRx: Store, Actions, Reducers, Selectors, and Effects"
+            "type": "text",
+            "role": "list-item",
+            "content": "Caching data and optimizing performance"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Increased predictability and debugging capabilities"
           }
         ]
       },
       {
         "type": "question",
-        "question": "What are the core principles of NgRx?",
+        "question": "Which of the following is a key benefit of using NgRx for state management?",
         "options": [
-          "Store, Actions, Selectors",
-          "Store, Actions, Reducers, Selectors, and Effects",
-          "Store, Actions, Reducers",
-          "Actions, Reducers, Effects"
+          "It encourages mutable data structures",
+          "It isolates state management per component",
+          "It provides a single source of truth for application state",
+          "It lacks integration with RxJS"
         ],
-        "answer": "Store, Actions, Reducers, Selectors, and Effects"
+        "answer": 2
       }
-    ],
-    "notes": "Make sure to clarify that NgRx is based on Redux, a JavaScript library for managing and updating application state, with tools to help you write better code."
+    ]
   },
   {
-    "id": "2",
-    "title": "Overview of Core Principles of NgRx",
+    "id": 2,
+    "title": "Introduction to NgRx (cont.)",
     "contents": [
       {
         "type": "text",
         "role": "heading",
-        "content": "Overview of Core Principles of NgRx"
+        "content": "Brief history of Redux and NgRx"
       },
       {
-        "type": "text",
-        "role": "paragraph",
-        "content": "Let's take a deep dive into the core principles of NgRx: Store, Actions, Reducers, Selectors, and Effects."
+        "type": "image",
+        "src": "https://ngrx.io/assets/images/badge.svg",
+        "alt": "NgRx logo",
+        "class": "w5"
       },
       {
-        "type": "text",
-        "role": "subheading",
-        "content": "NgRx Store"
-      },
-      {
-        "type": "text",
-        "role": "paragraph",
-        "content": "The Store is a controlled state container designed to help write performant, consistent applications on top of Angular."
-      },
-      {
-        "type": "text",
-        "role": "subheading",
-        "content": "NgRx Actions"
-      },
-      {
-        "type": "text",
-        "role": "paragraph",
-        "content": "Actions express unique events that happen throughout your application."
-      },
-      {
-        "type": "text",
-        "role": "subheading",
-        "content": "NgRx Reducers"
-      },
-      {
-        "type": "text",
-        "role": "paragraph",
-        "content": "Reducers in NgRx are responsible for handling transitions from one state to the next state in your application."
-      },
-      {
-        "type": "text",
-        "role": "subheading",
-        "content": "NgRx Selectors"
-      },
-      {
-        "type": "text",
-        "role": "paragraph",
-        "content": "Selectors are pure functions used for obtaining slices of store state."
-      },
-      {
-        "type": "text",
-        "role": "subheading",
-        "content": "NgRx Effects"
-      },
-      {
-        "type": "text",
-        "role": "paragraph",
-        "content": "Effects provide a way to interact with services or perform side-effects in response to actions."
-      },
-      {
-        "type": "question",
-        "question": "Which principle is responsible for handling transitions from one state to the next?",
-        "options": ["Actions", "Reducers", "Selectors", "Effects"],
-        "answer": "Reducers"
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Redux pioneered the concept of centralized state management"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "NgRx applies Redux principles built for Angular"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Provides patterns and utilities for managing state"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Integrates with RxJS for reactive state management"
+          }
+        ]
       }
-    ],
-    "notes": "Try to make sure students understand the distinct responsibilities of each principle and how they work together in the NgRx ecosystem."
+    ]
   },
   {
-    "id": "3",
-    "title": "Deep Dive: NgRx Store",
+    "id": 3,
+    "title": "Introduction to NgRx (cont.)",
     "contents": [
       {
         "type": "text",
         "role": "heading",
-        "content": "Deep Dive: NgRx Store"
+        "content": "Key benefits of NgRx"
       },
       {
-        "type": "text",
-        "role": "paragraph",
-        "content": "In NgRx, the Store is a single state tree and it's the heart of the NgRx ecosystem. It's a single source of truth for your application state, and its core principles are immutability and reactive state."
-      },
-      {
-        "type": "text",
-        "role": "subheading",
-        "content": "Why Use the NgRx Store?"
-      },
-      {
-        "type": "text",
-        "role": "paragraph",
-        "content": "NgRx Store provides reactive state management for Angular apps inspired by Redux. This means state is not mutated directly. Instead, new state objects are produced."
-      },
-      {
-        "type": "text",
-        "role": "subheading",
-        "content": "Creating a Basic Store"
-      },
-      {
-        "type": "code",
-        "language": "typescript",
-        "code": "import { StoreModule } from '@ngrx/store';\n\n@NgModule({\n  imports: [\n    StoreModule.forRoot({})\n  ]\n})"
+        "type": "list",
+        "listType": "unordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Type Safety"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Single source of truth for state"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "More predictable state changes"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Increased performance through immutable data"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Powerful dev tools for debugging (Redux Ext)"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "RxJS integration for reactive state"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Encourages best practices including TESTING"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Scalable architecture"
+          }
+        ]
       },
       {
         "type": "question",
-        "question": "What is the core principle of the NgRx Store?",
+        "question": "Which of these is NOT a key benefit of using NgRx?",
         "options": [
-          "Mutability",
-          "Direct state mutation",
-          "Immutability and reactive state",
-          "None of the above"
+          "Increased performance through immutable data",
+          "Lack of debugging tools",
+          "Single source of truth for state",
+          "Encourages best practices"
         ],
-        "answer": "Immutability and reactive state"
+        "answer": 1
       }
-    ],
-    "notes": "Explain how immutability contributes to predictable state changes and how it helps debugging and state tracking."
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Core Concepts Overview",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Immutability"
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Store"
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Actions"
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Reducers"
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Selectors"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Core Concepts Overview (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Immutability"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Definition:"
+      },
+      {
+        "type": "list",
+        "listType": "unordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Unchanging over time, state is not mutated"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Benefits:"
+      },
+      {
+        "type": "list",
+        "listType": "unordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Predictability - no unexpected changes"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Performance - cheap referential equality"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Time travel debugging"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Strategies in JavaScript:"
+      },
+      {
+        "type": "list",
+        "listType": "unordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Spread syntax"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Object.assign"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Other libs like Immer adn Immutable.js"
+          }
+        ]
+      },
+      {
+        "type": "question",
+        "question": "Which NgRx concept represents unchanging state?",
+        "options": ["Reducers", "Actions", "Immutability", "Selectors"],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Core Concepts Overview (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Store"
+      },
+      {
+        "type": "list",
+        "listType": "unordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Single source of truth for state"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Manages state as observable data with RxJS"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Dispatches actions"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Registers reducers to handle state transitions"
+          }
+        ]
+      },
+      {
+        "type": "question",
+        "question": "Which NgRx concept dispatches actions?",
+        "options": ["Immutability", "Reducers", "Store", "Selectors"],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Core Concepts Overview (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Actions"
+      },
+      {
+        "type": "list",
+        "listType": "unordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Events describing state changes"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Carry payload data"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Have a unique type for traceability"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Registers reducers to handle state transitions"
+          }
+        ]
+      },
+      {
+        "type": "question",
+        "question": "Which NgRx concept describes state change events?",
+        "options": ["Store", "Actions", "Immutability", "Reducers"],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Core Concepts Overview (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Reducers"
+      },
+      {
+        "type": "list",
+        "listType": "unordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Pure functions defining state transitions"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Use spread syntax for immutable update"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Handle actions by type"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Provide initial state"
+          }
+        ]
+      },
+      {
+        "type": "question",
+        "question": "Which NgRx concept handles modifying state based on action types?",
+        "options": ["Selectors", "Actions", "Store", "Reducers"],
+        "answer": 3
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Core Concepts Overview (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Selectors"
+      },
+      {
+        "type": "list",
+        "listType": "unordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Derive/transform data from state"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Enable efficient recomputation"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Parameterization and composition"
+          }
+        ]
+      },
+      {
+        "type": "question",
+        "question": "Which NgRx concept uses memoization and parameters for efficiency?",
+        "options": ["Store", "Actions", "Selectors", "Reducers"],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Core Concepts Overview (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Lifecycle"
+      },
+      {
+        "type": "image",
+        "src": "https://ngrx.io/generated/images/guide/store/state-management-lifecycle.png",
+        "alt": "",
+        "class": "w75"
+      },
+      {
+        "type": "question",
+        "question": "What is the correct sequence of the NgRx state management lifecycle?",
+        "options": [
+          "Selector -> Reducer -> Store -> Action",
+          "Store -> Reducer -> Action -> Selector",
+          "Action -> Store -> Selector -> Reducer",
+          "Action -> Reducer -> Store -> Selector"
+        ],
+        "answer": 3
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Hands-On Core Concepts #1",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Hands-On Core Concepts #1 - Store"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Conversion to NgRx Store"
+      },
+      {
+        "type": "image",
+        "src": "assets/code1.png",
+        "alt": "",
+        "class": "w50"
+      }
+    ]
   }
 ]
