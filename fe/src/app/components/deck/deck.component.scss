@@ -137,7 +137,7 @@ code {
 
 .img-wrap {
   width: 100%;
-  text-align: center;
+  display: flex;
   img {
     &.xs {
       max-width: 2em;
@@ -162,6 +162,12 @@ code {
     }
     &.w5 {
       width: 5%;
+    }
+    &.sp1 {
+      transform: translate(-310px, -135px) rotate(-36deg);
+      position: absolute;
+      opacity: 0.15;
+      width: 20%;
     }
   }
 }

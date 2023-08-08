@@ -70,7 +70,7 @@
         "type": "image",
         "src": "https://ngrx.io/assets/images/badge.svg",
         "alt": "NgRx logo",
-        "class": "w5"
+        "class": "w10 sp1"
       },
       {
         "type": "list",
@@ -496,8 +496,8 @@
       {
         "type": "image",
         "src": "assets/code1.png",
-        "alt": "",
-        "class": "w50"
+        "alt": "code",
+        "class": "w75 inset"
       }
     ]
   }
