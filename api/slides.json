@@ -486,22 +486,125 @@
       {
         "type": "text",
         "role": "heading",
-        "content": "Hands-On Core Concepts #1 - Store"
+        "content": "Hands-On Core Concepts #1 - Conversion to NgRx Store"
       },
       {
         "type": "text",
         "role": "subheading",
-        "content": "Conversion to NgRx Store"
+        "content": "add Ngrx & Redux DevTools"
       },
       {
         "type": "text",
-        "role": "heading",
+        "role": "subheading",
         "content": "Install NgRx"
       },
       {
         "type": "code",
         "language": "bash",
         "code": "npm install @ngrx/store --save"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "import the StoreModule in our AppModule (src/app/app.module.ts (imports))"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "import { StoreModule } from '@ngrx/store';"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "add the import (src/app/app.module.ts (StoreModule))"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "@NgModule({\n  declarations: [AppComponent, DeckComponent, NotFoundComponent],\n  imports: [\n    BrowserModule,\n    AppRoutingModule,\n    HttpClientModule,\n    StoreModule.forRoot({}),\n  ],\n  providers: [],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "add Redux DevTools Chrome Extension"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "https://tinyurl.com/reduxDevToolsExt"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "install NgRx Store DevTools"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "npm install @ngrx/store-devtools --save"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "import and add NgRx Store DevTools to AppModule"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "import { StoreDevtoolsModule } from '@ngrx/store-devtools';\n\n  @NgModule({\n  declarations: [AppComponent, DeckComponent, NotFoundComponent],\n  imports: [\n    BrowserModule,\n    AppRoutingModule,\n    HttpClientModule,\n    StoreModule.forRoot({}),\n    StoreDevtoolsModule.instrument({\n      maxAge: 25, // Retains last 25 states\n      // logOnly: !isDevMode(), // Restrict extension to log-only mode\n      autoPause: true, // Pauses recording actions and state changes when the extension window is not open\n      trace: false, //  If set to true, will include stack trace for every dispatched action, so you can see it in trace tab jumping directly to that part of code\n      traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)\n    }),\n  ],\n  providers: [],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Hands-On Core Concepts #1 (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Now for the fun stuff... Reducers!"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "add the DeckReducer with initial state"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "// under fe/src/state/ add deck.reducer.ts\n\nimport { PresentationDeck } from 'src/types/presentation-deck';\n\nimport { createReducer, on } from '@ngrx/store';\n\nexport const initialDeckState: Readonly<PresentationDeck> = {\n  currentSlide: null,\n  slides: [],\n};\n\nexport const DeckReducer = createReducer(initialDeckState);\n"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "and now import and add the reducer to our root state in the AppModule"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "StoreModule.forRoot({ presentation: DeckReducer })"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "check out our initial app state with Redux DevTools..."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Hands-On Core Concepts #1 (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Lunchtime!"
+      },
+      {
+        "type": "image",
+        "src": "/assets/lunch.gif",
+        "alt": "lunch",
+        "class": "sp2"
       }
     ]
   }
