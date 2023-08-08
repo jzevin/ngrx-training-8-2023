@@ -494,10 +494,14 @@
         "content": "Conversion to NgRx Store"
       },
       {
-        "type": "image",
-        "src": "assets/code1.png",
-        "alt": "code",
-        "class": "w75 inset"
+        "type": "text",
+        "role": "heading",
+        "content": "Install NgRx"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "npm install @ngrx/store --save"
       }
     ]
   }
