@@ -6,8 +6,7 @@
 }
 .slide {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   position: relative;
   padding: 4em;
   background: #181818;
@@ -18,6 +17,7 @@
   border-bottom-color: hsl(0deg 0% 0% / 35%);
   border-right-color: hsl(0deg 0% 0% / 350%);
   background: linear-gradient(133deg, #00000075 20%, #00000047 50%);
+  overflow: hidden;
 }
 .counter {
   position: absolute;
@@ -51,9 +51,20 @@ p {
 }
 
 .content {
-  margin: 0 auto;
-  max-width: 50vw;
+  flex: 0 0 75%;
   overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 0.15em;
+  }
+
+  &::-webkit-scrollbar-track {
+    // -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: rgb(25, 25, 25);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(35, 35, 35);
+    // outline: 1px solid slategrey;
+  }
 }
 
 .slide {
@@ -164,10 +175,21 @@ code {
       width: 5%;
     }
     &.sp1 {
-      transform: translate(-310px, -135px) rotate(-36deg);
+      transform: translate(130px, -5px) rotate(28deg);
       position: absolute;
       opacity: 0.15;
-      width: 20%;
+      width: 50%;
+      right: 0;
+      bottom: 0;
+    }
+    &.sp2 {
+      transform: translate(10px, 0) rotate(12deg);
+      position: absolute;
+      opacity: 0.75;
+      width: 80%;
+      right: -10%;
+      bottom: -20%;
+      border-radius: 50%;
     }
   }
 }
