@@ -607,5 +607,167 @@
         "class": "sp2"
       }
     ]
+  },
+  {
+    "id": 14,
+    "title": "Hands-On Core Concepts #2 - Actions",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Hands-On Core Concepts #2 - Actions"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Actions express unique events that happen throughout your application. From user interaction with the page, external interaction through network requests, and direct interaction with device APIs, these and more events are described with actions."
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Define slide deck actions (action party)"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Dispatch for navigation and triggering reducers etc."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Handle in reducers"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Writing actions"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "There are a few rules to writing good actions within your application."
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Upfront - write actions before developing features to understand and gain a shared knowledge of the feature being implemented."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Divide - categorize actions based on the event source."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Many - actions are inexpensive to write, so the more actions you write, the better you express flows in your application."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Event-Driven - capture events not commands as you are separating the description of an event and the handling of that event."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Descriptive - provide context that are targeted to a unique event with more detailed information you can use to aid in debugging with the developer tools."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Hands-On Core Concepts #2 - Actions (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Action Party!"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Write Action Types with a pattern and stick with it!"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "In Primum, I used '[Actor] Action Type' and followed a Success and Failure pattern when using an effect, and organized them all under a CaseActions object."
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "[user] clicked order button"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "[primum] get status, [primum] get status success, [primum] get status failure"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "[user] clicked close modal"
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "src": "/assets/primum-actions.png",
+        "alt": "actions",
+        "class": "sp3"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Hands-On Core Concepts #2 - Actions (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Actions!"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "add the DeckActions"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "// under fe/src/state/ add deck.actions.ts\n\nimport { PresentationDeck } from 'src/types/presentation-deck';\n\nimport { createReducer, on } from '@ngrx/store';\n\nexport const initialDeckState: Readonly<PresentationDeck> = {\n  currentSlide: null,\n  slides: [],\n};\n\nexport const DeckReducer = createReducer(initialDeckState);\n"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "and now import and add the reducer to our root state in the AppModule"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "StoreModule.forRoot({ presentation: DeckReducer })"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "check out our initial app state with Redux DevTools..."
+      }
+    ]
   }
 ]
