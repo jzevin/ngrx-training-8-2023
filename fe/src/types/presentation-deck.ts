@@ -51,11 +51,11 @@ export interface Slide {
   notes?: string;
 }
 
-export interface PresentationDeck {
+export interface DeckState {
   currentSlide: Slide | null;
   slides: Slide[];
 }
 
 export interface AppState {
-  currentSlide: PresentationDeck;
+  presentation: DeckState;
 }

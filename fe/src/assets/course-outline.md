@@ -36,15 +36,18 @@
 
 ## Core Concepts 2 - Actions Hands-On #2 - Add NgRx Actions (45 mins)
 
-- Define slide deck actions
-- Dispatch for navigation
+- Define slide deck actions (action party)
+- Dispatch for navigation and triggering reducers etc.
 - Handle in reducers
 
 ## Core Concepts 3 - Actions Hands-On #3 - Reducers (45 mins)
 
+- Handling our actions
+
 ## Core Concepts 4 - Hands-On #4 - Implement Selectors (30 mins)
 
 - Create/use selectors to power view
+- Change your ways: view async pipe
 - Memoize selectors
 
 ## Core Concepts 5 - Effects - Hands-On #5 - Migrate Data Loading (45 mins)
@@ -73,6 +76,8 @@
 
 # Feature Assignments
 
+- Loading indicator
+- Slides nav
 - Add undo/redo functionality
 - Secured routes
 - Settings page with additional state slice
