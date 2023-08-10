@@ -28,29 +28,29 @@
   - Efficient recomputation
   - Parameterization and composition
 
-## Core Concepts 1 - Store - Hands-On #1 - Convert to NgRx Store (45 mins)
+## Core Concepts 1 - Hands-On #1 - Convert to NgRx Store (45 mins)
 
 - Create store and slide deck state
 - Register root reducer
 - Populate initial state
 
-## Core Concepts 2 - Actions Hands-On #2 - Add NgRx Actions (45 mins)
+## Core Concepts 2 - Hands-On #2 - Add NgRx Actions (45 mins)
 
 - Define slide deck actions (action party)
 - Dispatch for navigation and triggering reducers etc.
 - Handle in reducers
 
-## Core Concepts 3 - Actions Hands-On #3 - Reducers (45 mins)
+## Core Concepts 3 - Hands-On #3 - Reducers (30 mins)
 
-- Handling our actions
+- Handling state changes for our actions
 
-## Core Concepts 4 - Hands-On #4 - Implement Selectors (30 mins)
+## Core Concepts 4 - Hands-On #4 - Selectors (45 mins)
 
 - Create/use selectors to power view
 - Change your ways: view async pipe
 - Memoize selectors
 
-## Core Concepts 5 - Effects - Hands-On #5 - Migrate Data Loading (45 mins)
+## Core Concepts 5 - Hands-On #5 - Effects (45 mins)
 
 - Create effect to load slides
 - Migrate data load to effect
