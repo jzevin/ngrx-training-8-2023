@@ -1,8 +1,10 @@
 import { ApiService } from 'src/app/services/api.service';
+import { deckActions } from 'src/app/state/deck.actions';
 import { QuestionContent, Slide } from 'src/types/presentation-deck';
 
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 declare const hljs: any;
 
@@ -40,7 +42,8 @@ export class DeckComponent implements OnInit {
     private el: ElementRef,
     private route: ActivatedRoute,
     private router: Router,
-    private api: ApiService
+    private api: ApiService,
+    private store: Store
   ) {
     api.getSlides().subscribe((data) => {
       this.slides = data;
@@ -53,7 +56,9 @@ export class DeckComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.dispatch(deckActions.slides.load());
+  }
 
   incrementSlide() {
     const currentIndex = this.slides.findIndex(
