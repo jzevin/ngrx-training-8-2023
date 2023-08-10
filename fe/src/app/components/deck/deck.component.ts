@@ -1,13 +1,10 @@
-import { ApiService } from 'src/app/services/api.service';
 import { deckActions } from 'src/app/state/deck.actions';
 import { deckSelectors } from 'src/app/state/deck.selectors';
-import { QuestionContent, Slide } from 'src/types/presentation-deck';
+import { DeckState, QuestionContent } from 'src/types/presentation-deck';
 
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-
-declare const hljs: any;
 
 @Component({
   selector: 'nbme-deck',
@@ -15,85 +12,49 @@ declare const hljs: any;
   styleUrls: ['./deck.component.scss'],
 })
 export class DeckComponent implements OnInit {
-  @HostListener('window:keydown', ['$event']) handleKeyDown(
-    event: KeyboardEvent
-  ) {
-    switch (event.key) {
-      case 'ArrowRight':
-        this.incrementSlide();
-        break;
-      case 'ArrowLeft':
-        this.decrementSlide();
-        break;
-      default:
-        break;
-    }
-  }
-  @HostListener('click', ['$event']) handleClick(event: MouseEvent) {
-    if ((event.target as HTMLElement) === this.el.nativeElement) {
-      this.incrementSlide();
-    }
-  }
-  id: number = 0;
-  currentSlide: Slide | null = null;
-  slides: Slide[] = [];
   showQuiz = false;
   revealAnswer = false;
   $deckState = this.store.select(deckSelectors.deck);
   constructor(
-    private el: ElementRef,
     private route: ActivatedRoute,
     private router: Router,
-    private api: ApiService,
     private store: Store
-  ) {
-    api.getSlides().subscribe((data) => {
-      this.slides = data;
-      this.id = Number(this.route.snapshot.paramMap.get('id') || '');
-      this.currentSlide =
-        this.slides.find((slide) => slide.id === this.id) || null;
-      if (!this.currentSlide) {
-        this.router.navigateByUrl('404');
-      }
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.store.dispatch(deckActions.slides.load());
   }
 
-  incrementSlide() {
-    const currentIndex = this.slides.findIndex(
-      (slide) => slide.id === this.currentSlide?.id
-    );
-    const nextIndex = currentIndex + 1;
-    if (nextIndex < this.slides.length) {
-      this.currentSlide = this.slides[nextIndex];
-      this.id = this.currentSlide.id;
-      this.onHideQuiz();
-      this.revealAnswer = false;
-      this.router.navigateByUrl(`/slide/${nextIndex + 1}`);
+  handleClick(event: MouseEvent, deckState: DeckState) {
+    if (event.clientX < window.innerWidth * 0.1) {
+      this.store.dispatch(deckActions.slides.decrement());
+      this.decrementSlide(deckState);
     }
-  }
-  decrementSlide() {
-    const currentIndex = this.slides.findIndex(
-      (slide) => slide.id === this.currentSlide?.id
-    );
-    const prevIndex = currentIndex - 1;
-    if (prevIndex >= 0) {
-      this.currentSlide = this.slides[prevIndex];
-      this.id = this.currentSlide.id;
-      this.onHideQuiz();
-      this.revealAnswer = false;
-      this.router.navigateByUrl(`/slide/${prevIndex + 1}`);
+
+    if (event.clientX > window.innerWidth * 0.9) {
+      this.store.dispatch(deckActions.slides.increment());
+      this.incrementSlide(deckState);
     }
   }
 
-  getSlideNumberText() {
-    const currentIndex = this.slides.findIndex(
-      (slide) => slide.id === this.currentSlide?.id
+  incrementSlide(deckState: DeckState) {
+    this.onHideQuiz();
+    this.revealAnswer = false;
+    if (deckState.currentSlide)
+      this.router.navigateByUrl(`/slide/${deckState.currentSlide?.id}`);
+  }
+  decrementSlide(deckState: DeckState) {
+    this.onHideQuiz();
+    this.revealAnswer = false;
+    if (deckState.currentSlide)
+      this.router.navigateByUrl(`/slide/${deckState.currentSlide?.id}`);
+  }
+
+  getSlideNumberText(deckState: DeckState) {
+    const currentIndex = deckState.slides.findIndex(
+      (slide) => slide.id === deckState.currentSlide?.id
     );
-    return `${currentIndex + 1} / ${this.slides.length}`;
+    return `${currentIndex + 1} / ${deckState.slides.length}`;
   }
 
   onShowQuiz() {
@@ -105,8 +66,8 @@ export class DeckComponent implements OnInit {
   onRevealAnswer() {
     this.revealAnswer = true;
   }
-  getQuizData(): QuestionContent | null {
-    const found = this.currentSlide?.contents.filter(
+  getQuizData(deckState: DeckState): QuestionContent | null {
+    const found = deckState.currentSlide?.contents.filter(
       (item) => item.type === 'question'
     );
     return found && found.length > 0 ? (found[0] as QuestionContent) : null;

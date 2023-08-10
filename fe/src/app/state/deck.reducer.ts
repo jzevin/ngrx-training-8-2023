@@ -22,11 +22,25 @@ export const DeckReducer = createReducer(
   on(deckActions.slides.increment, (state) => {
     const newState: DeckState = { ...state }; // necessary as it is Readonly
     // increment logic here
+    const currentIndex = state.slides.findIndex(
+      (slide) => slide.id === state.currentSlide?.id
+    );
+    const nextIndex = currentIndex + 1;
+    if (nextIndex < state.slides.length) {
+      newState.currentSlide = state.slides[nextIndex];
+    }
     return newState;
   }),
   on(deckActions.slides.decrement, (state) => {
     const newState: DeckState = { ...state };
     // decrement logic here
+    const currentIndex = state.slides.findIndex(
+      (slide) => slide.id === state.currentSlide?.id
+    );
+    const nextIndex = currentIndex - 1;
+    if (nextIndex >= 0) {
+      newState.currentSlide = state.slides[nextIndex];
+    }
     return newState;
   })
 );
