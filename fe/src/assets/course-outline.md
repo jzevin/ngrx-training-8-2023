@@ -54,6 +54,7 @@
 
 - Create effect to load slides
 - Migrate data load to effect
+- Refactor deck component to only use state and async pipe
 
 ## Advanced Concepts (20 mins)
 
@@ -65,6 +66,8 @@
 
 ## Conclusion (30 mins)
 
+- Play with it! Start small and simple
+- Do you own DD this is only an intro
 - Recap core concepts
 - Feature assignments
 - Q&A
@@ -78,6 +81,8 @@
 
 - Loading indicator
 - Slides nav
+- Fix router bug after our re-factor
+- Move quiz data to state and refactor deck comp
 - Add undo/redo functionality
 - Secured routes
 - Settings page with additional state slice
