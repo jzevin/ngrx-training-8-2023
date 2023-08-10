@@ -572,7 +572,7 @@
       {
         "type": "code",
         "language": "bash",
-        "code": "// under fe/src/state/ add deck.reducer.ts\n\nimport { PresentationDeck } from 'src/types/presentation-deck';\n\nimport { createReducer, on } from '@ngrx/store';\n\nexport const initialDeckState: Readonly<PresentationDeck> = {\n  currentSlide: null,\n  slides: [],\n};\n\nexport const DeckReducer = createReducer(initialDeckState);\n"
+        "code": "// under fe/src/state/ add deck.reducer.ts\n\nimport { DeckState } from 'src/types/presentation-deck';\n\nimport { createReducer, on } from '@ngrx/store';\n\nexport const initialDeckState: Readonly<DeckState> = {\n  currentSlide: null,\n  slides: [],\n};\n\nexport const DeckReducer = createReducer(initialDeckState);\n"
       },
       {
         "type": "text",
@@ -751,22 +751,96 @@
       {
         "type": "code",
         "language": "bash",
-        "code": "// under fe/src/state/ add deck.actions.ts\n\nimport { PresentationDeck } from 'src/types/presentation-deck';\n\nimport { createReducer, on } from '@ngrx/store';\n\nexport const initialDeckState: Readonly<PresentationDeck> = {\n  currentSlide: null,\n  slides: [],\n};\n\nexport const DeckReducer = createReducer(initialDeckState);\n"
+        "code": "// under fe/src/state/ add deck.actions.ts\n\nimport { Slide } from 'src/types/presentation-deck';\n\nimport { createAction, props } from '@ngrx/store';\n\nexport const deckActions = {\n  slides: {\n    load: createAction('[deck] load slides'),\n    loadSuccess: createAction(\n      '[deck] load slides success',\n      props<{ payload: Slide[] }>()\n    ),\n    loadFailure: createAction(\n      '[deck] load slides failure',\n      props<{ payload: Error }>()\n    ),\n    increment: createAction('[user] increment slide'),\n    decrement: createAction('[user] decrement slide'),\n  },\n};"
       },
       {
         "type": "text",
         "role": "subheading",
-        "content": "and now import and add the reducer to our root state in the AppModule"
+        "content": "in the deck.component.ts import our DeckActions, inject Store, and add:"
       },
       {
         "type": "code",
         "language": "bash",
-        "code": "StoreModule.forRoot({ presentation: DeckReducer })"
+        "code": "// don't forget to import/inject Store\n\nadd  ngOnInit() {\n    this.store.dispatch(deckActions.slides.load())\n  }"
       },
       {
         "type": "text",
         "role": "subheading",
-        "content": "check out our initial app state with Redux DevTools..."
+        "content": "next we'll add reducers, but for now lets see one of our actions fire off and take note of how it is indicated in Redux DevTools..."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Hands-On Core Concepts #3 - Reducers",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Hands-On Core Concepts #3 - Reducers"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Reducers are responsible for maintaining the immutability of the state by returning a new state object instead of modifying the existing state directly. This approach helps in tracking changes effectively and maintaining a clear history of state changes."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "I like to think of Reducers as funnels current state and action enter through the top and new state comes out the bottom."
+      },
+      {
+        "type": "image",
+        "src": "/assets/reducers.png",
+        "alt": "Reducers",
+        "class": "w25"
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "State and Action Entry (Top of Funnel): At the funnel's start, you input the app's current state and action. The state shows data and app status, while the action describes an event. Actions are simple JavaScript objects with a type property denoting the action's goal and often carry extra data."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Reducer Processing (Inside the Funnel): The reducer, the funnel's core, processes the state and action. Like machinery, it transforms them into a new state. Reducers are clean functions, taking current state and action, and deciding how to apply the action. Based on the action's type and payload, it computes state changes."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "New State Generation (Bottom of Funnel): While traversing the reducer, the state and action trigger computations, transformations, or updates. These create a fresh state representing action-induced changes. This updated state captures the new data and app state, completing the process."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "The funnel's bottom delivers the new state. It reflects the app's modified data and state after action processing."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Hands-On Core Concepts #3 - Reducers (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Reducers"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "let's go back to our deck.reducer.ts file and handle our first state change with a reducer for our slide increment action"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "import { Slide } from 'src/types/presentation-deck';\n\nimport { createAction, props } from '@ngrx/store';\n\nexport const deckActions = {\n  slides: {\n    load: createAction('[deck] load slides'),\n    loadSuccess: createAction(\n      '[deck] load slides success',\n      props<{ payload: Slide[] }>()\n    ),\n    loadFailure: createAction(\n      '[deck] load slides failure',\n      props<{ payload: Error }>()\n    ),\n    increment: createAction('[user] increment slide'),\n    decrement: createAction('[user] decrement slide'),\n  },\n};"
       }
     ]
   }
