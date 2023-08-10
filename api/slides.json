@@ -835,12 +835,32 @@
       {
         "type": "text",
         "role": "subheading",
-        "content": "let's go back to our deck.reducer.ts file and handle our first state change with a reducer for our slide increment action"
+        "content": "let's go back to our deck.reducer.ts file and handle our first state change with reducers for our slides.increment and slides.decrement actions"
       },
       {
         "type": "code",
         "language": "bash",
-        "code": "import { Slide } from 'src/types/presentation-deck';\n\nimport { createAction, props } from '@ngrx/store';\n\nexport const deckActions = {\n  slides: {\n    load: createAction('[deck] load slides'),\n    loadSuccess: createAction(\n      '[deck] load slides success',\n      props<{ payload: Slide[] }>()\n    ),\n    loadFailure: createAction(\n      '[deck] load slides failure',\n      props<{ payload: Error }>()\n    ),\n    increment: createAction('[user] increment slide'),\n    decrement: createAction('[user] decrement slide'),\n  },\n};"
+        "code": "import { DeckState } from 'src/types/presentation-deck';\n\nimport { createReducer, on } from '@ngrx/store';\n\nimport { deckActions } from './deck.actions';\n\nexport const initialDeckState: Readonly<DeckState> = {\n  currentSlide: null,\n  slides: [],\n};\n\nexport const DeckReducer = createReducer(\n  initialDeckState,\n  on(deckActions.slides.increment, (state) => {\n    const newState: DeckState = { ...state }; // necessary as it is Readonly\n    // increment logic here\n    return newState;\n  }),\n  on(deckActions.slides.decrement, (state) => {\n    const newState: DeckState = { ...state };\n    // decrement logic here\n    return newState;\n  })\n);\n"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "let's add another reducer for our slides.loadSuccess action and note the payload"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "export const DeckReducer = createReducer(\n  initialDeckState,\n  on(deckActions.slides.loadSuccess, (state, { payload }) => {\n    const newState: DeckState = {\n      ...state,\n      slides: payload,\n      currentSlide: payload[0],\n      foo: 'bar'\n    };\n    return newState;\n  }),\n  on(deckActions.slides.increment, (state) => {\n    const newState = { ...state }; // necessary as it is Readonly\n    // increment logic here\n    return newState;\n  }),\n  on(deckActions.slides.decrement, (state) => {\n    const newState = { ...state };\n    // decrement logic here\n    return newState;\n  })\n);"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Oops looks like we added an illegal property! Lets fix it and thankfully TypeScript is on guard 💪"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Notice we are receiving payload from our action then and spreading the previous state; first into our new state and overwriting slides, and then currentSlide with our new action payload: Slides[][0]"
       }
     ]
   }
