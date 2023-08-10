@@ -1,5 +1,6 @@
 import { ApiService } from 'src/app/services/api.service';
 import { deckActions } from 'src/app/state/deck.actions';
+import { deckSelectors } from 'src/app/state/deck.selectors';
 import { QuestionContent, Slide } from 'src/types/presentation-deck';
 
 import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
@@ -38,6 +39,7 @@ export class DeckComponent implements OnInit {
   slides: Slide[] = [];
   showQuiz = false;
   revealAnswer = false;
+  $deckState = this.store.select(deckSelectors.deck);
   constructor(
     private el: ElementRef,
     private route: ActivatedRoute,

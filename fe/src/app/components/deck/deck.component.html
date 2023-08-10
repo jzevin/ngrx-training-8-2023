@@ -1,4 +1,4 @@
-<ng-container *ngIf="currentSlide">
+<ng-container *ngIf="currentSlide && $deckState | async as $vm">
   <div class="slide" [ngClass]="{ quiz: showQuiz }">
     <div class="quiz-content" *ngIf="getQuizData() as quiz">
       <div class="quiz">
@@ -18,9 +18,9 @@
       </div>
     </div>
     <div class="content">
-      <h1 class="title">{{ currentSlide.title }}</h1>
+      <h1 class="title">{{ currentSlide?.title }}</h1>
       <ng-container
-        *ngFor="let contentItem of currentSlide.contents; index as i"
+        *ngFor="let contentItem of currentSlide?.contents; index as i"
       >
         <ng-container *ngIf="contentItem.type === 'text'">
           <p [class]="contentItem.role">{{ contentItem.content }}</p>
