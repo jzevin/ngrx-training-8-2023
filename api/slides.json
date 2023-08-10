@@ -863,5 +863,374 @@
         "content": "Notice we are receiving payload from our action then and spreading the previous state; first into our new state and overwriting slides, and then currentSlide with our new action payload: Slides[][0]"
       }
     ]
+  },
+  {
+    "id": 19,
+    "title": "Hands-On Core Concepts #4 - Selectors",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Hands-On Core Concepts #4 - Selectors"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Reducers are responsible for maintaining the immutability of the state by returning a new state object instead of modifying the existing state directly. This approach helps in tracking changes effectively and maintaining a clear history of state changes."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Selectors allow us to retrieve properties from the state"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Selectors are pure functions used for obtaining slices of store state. @ngrx/store provides a few helper functions for optimizing this selection. Selectors provide many features when selecting slices of state:"
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Portability"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Memoization"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Composition"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Testability"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Type Safety"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "When using the createSelector and createFeatureSelector functions @ngrx/store keeps track of the latest arguments in which your selector function was invoked. Because selectors are pure functions, the last result can be returned when the arguments match without reinvoking your selector function. This can provide performance benefits, particularly with selectors that perform expensive computation. This practice is known as memoization."
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Combining Selectors"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "By combining multiple selector functions in createSelector you can achieve comprehensive selectors that combine different states or parts of state like if you have a currentUser and wanted to filter a collection based on the CurrentUser."
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "We don't need that in this app but here is an example:"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "import { createSelector } from '@ngrx/store';\n\nexport interface User {\n  id: number;\n  name: string;\n}\n\nexport interface Book {\n  id: number;\n  userId: number;\n  name: string;\n}\n\nexport interface AppState {\n  selectedUser: User;\n  allBooks: Book[];\n}\n\nexport const selectUser = (state: AppState) => state.selectedUser;\nexport const selectAllBooks = (state: AppState) => state.allBooks;\n\nexport const selectVisibleBooks = createSelector(\n  selectUser,\n  selectAllBooks,\n  (selectedUser: User, allBooks: Book[]) => {\n    if (selectedUser && allBooks) {\n      return allBooks.filter((book: Book) => book.userId === selectedUser.id);\n    } else {\n      return allBooks;\n    }\n  }\n);"
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "DeckSelectors"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Lets create a deck.selectors.ts in src/app/state"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "import { DeckState } from 'src/types/presentation-deck';\n\nimport { createFeatureSelector, createSelector } from '@ngrx/store';\n\nconst deckFeature = createFeatureSelector<DeckState>('presentation');\n\nexport const deckSelectors = {\n  deck: createSelector(deckFeature, (state: DeckState) => state),\n};\n"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Hands-On Core Concepts #4 - Selectors (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Super Charge Component Views w/ Selectors and Async Pipes"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Advantages to using the async pipe in the component view with NgRx"
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Automatically subscribes and unsubscribes to observables like the store"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Avoid explicit subscription handling in components"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "More declarative code in templates"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Cleans up subscriptions and minimizes memory leaks"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Less boilerplate code for subscribing/unsubscribing"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Streamlines change detection by marking observables as dirty checks"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Caches results and recalculates only when the observable emits"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Handles null/undefined values before emission"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Provides hint that the data is asynchronous"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Combining the async pipe with passing state to component methods as needed,keeps those methods pure and avoids subscribing to selectors in the component class"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Now lets super charge or Deck component's view with our new selector and an Async Pipe pattern"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "First we need to add our deck selector to our deck component class"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "// above the constructor add...\n\n$deckState = this.store.select(deckSelectors.deck);"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Next we add our selector's return value of Observable<DeckState> to our view."
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "<ng-container *ngIf=\"currentSlide && $deckState | async as $vm\">"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "We'll need to add currentSlide? in a couple spots to keep the view working for now until we refactor for async pipe. Additionally we now have state running side by side with our current component's class state until we refactor to only use state."
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Hands-On Core Concepts #5 - Effects",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Hands-On Core Concepts #5 - Effects"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Effects are an RxJS powered side effect model for Store. Effects use streams to provide new sources of actions to reduce state based on external interactions such as network requests, web socket messages and time-based events."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "In a service-based Angular application, components are responsible for interacting with external resources directly through services. Instead, effects provide a way to interact with those services and isolate them from the components. Effects are where you handle tasks such as fetching data, long-running tasks that produce multiple events, and other external interactions where your components don't need explicit knowledge of these interactions."
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Key Concepts"
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Effects isolate side effects from components, allowing for more pure components that select state and dispatch actions"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Effects are long-running services that listen to an observable of every action dispatched from the Store."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Effects filter those actions based on the type of action they are interested in. This is done by using an operator."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Effects perform tasks, which are synchronous or asynchronous and return a new action."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "First install NgRx Effects"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "ng add @ngrx/effects@latest"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Next we add deck.effects.ts"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "import { catchError, map, mergeMap, of } from 'rxjs';\nimport { deckActions } from 'src/app/state/deck.actions';\n\nimport { Injectable } from '@angular/core';\nimport { Actions, createEffect, ofType } from '@ngrx/effects';\nimport { Store } from '@ngrx/store';\n\nimport { ApiService } from '../services/api.service';\n\n@Injectable()\nexport class DeckEffects {\n  constructor(\n    private api: ApiService,\n    private actions$: Actions,\n    private store: Store\n  ) {}\n\n  loadSlides$ = createEffect(() => {\n    return this.actions$.pipe(\n      ofType(deckActions.slides.load),\n      mergeMap(() => {\n        return this.api.getSlides().pipe(\n          map((data) => deckActions.slides.loadSuccess({ payload: data })),\n          catchError((error) =>\n            of(deckActions.slides.loadFailure({ payload: error }))\n          )\n        );\n      })\n    );\n  });\n}\n"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "before registering our new DeckEffects class with our Store let look back at our Redux Tool and notice we have one action firing after init (deckActions.slides.load) and remember we are listening for that in our loadSlides$ effect in our DeckEffects class"
+      },
+      {
+        "type": "image",
+        "src": "/assets/redux1.png",
+        "alt": "redux1",
+        "class": "full-width"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "and now we register our DeckEffects class with the EffectsModule like so:"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "EffectsModule.forRoot([DeckEffects]),"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "now you see the result of our loadSlides$ effect calling the api and dispatching the loadSuccess action which triggers the loadSuccess Reducer and returns a new state with populated slides and a currentSlide!"
+      },
+      {
+        "type": "image",
+        "src": "/assets/redux2.png",
+        "alt": "redux2",
+        "class": "full-width"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "title": "Hands-On Core Concepts #5 - Effects (cont)",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Refactor for State & Async Pipe only"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Here we will finally refactor our Deck component to only use our DeckSate and Async Pipe"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "First lets move our click listener to the view so we can stay pure by passing in state as needed, avoid unnecessary extra subscriptions, and all the other benefits mentioned earlier (selectors section)"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Additionally we will remove the keydown listener and handler and do it all with the click handler"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "<div class=\"slide\" [ngClass]=\"{ quiz: showQuiz }\" (click)=\"handleClick($event, $vm)\">"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "For the sake of time, going forward I've included whole files or you can checkout the final branch #5"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Next we will remove all the host listeners, make our click handler and all other methods, pure by passing in the current state. So our new Deck class will look like this:"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "import { deckActions } from 'src/app/state/deck.actions';\nimport { deckSelectors } from 'src/app/state/deck.selectors';\nimport { DeckState, QuestionContent } from 'src/types/presentation-deck';\n\nimport { Component, OnInit } from '@angular/core';\nimport { ActivatedRoute, Router } from '@angular/router';\nimport { Store } from '@ngrx/store';\n\n@Component({\n  selector: 'nbme-deck',\n  templateUrl: './deck.component.html',\n  styleUrls: ['./deck.component.scss'],\n})\nexport class DeckComponent implements OnInit {\n  showQuiz = false;\n  revealAnswer = false;\n  $deckState = this.store.select(deckSelectors.deck);\n  constructor(\n    private route: ActivatedRoute,\n    private router: Router,\n    private store: Store\n  ) {}\n\n  ngOnInit() {\n    this.store.dispatch(deckActions.slides.load());\n  }\n\n  handleClick(event: MouseEvent, deckState: DeckState) {\n    if (event.clientX < window.innerWidth * 0.1) {\n      this.store.dispatch(deckActions.slides.decrement());\n      this.decrementSlide(deckState);\n    }\n\n    if (event.clientX > window.innerWidth * 0.9) {\n      this.store.dispatch(deckActions.slides.increment());\n      this.incrementSlide(deckState);\n    }\n  }\n\n  incrementSlide(deckState: DeckState) {\n    this.onHideQuiz();\n    this.revealAnswer = false;\n    if (deckState.currentSlide)\n      this.router.navigateByUrl(`/slide/${deckState.currentSlide?.id}`);\n  }\n  decrementSlide(deckState: DeckState) {\n    this.onHideQuiz();\n    this.revealAnswer = false;\n    if (deckState.currentSlide)\n      this.router.navigateByUrl(`/slide/${deckState.currentSlide?.id}`);\n  }\n\n  getSlideNumberText(deckState: DeckState) {\n    const currentIndex = deckState.slides.findIndex(\n      (slide) => slide.id === deckState.currentSlide?.id\n    );\n    return `${currentIndex + 1} / ${deckState.slides.length}`;\n  }\n\n  onShowQuiz() {\n    this.showQuiz = true;\n  }\n  onHideQuiz() {\n    this.showQuiz = false;\n  }\n  onRevealAnswer() {\n    this.revealAnswer = true;\n  }\n  getQuizData(deckState: DeckState): QuestionContent | null {\n    const found = deckState.currentSlide?.contents.filter(\n      (item) => item.type === 'question'\n    );\n    return found && found.length > 0 ? (found[0] as QuestionContent) : null;\n  }\n\n  isQuizAnswer(options: string[], option: string, answerIndex: number) {\n    return answerIndex === options.findIndex((o) => option === o);\n  }\n}\n"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "and our new view will look like this:"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "<ng-container *ngIf=\"$deckState | async as $vm\">\n  <div\n    class=\"slide\"\n    [ngClass]=\"{ quiz: showQuiz }\"\n    (click)=\"handleClick($event, $vm)\"\n  >\n    <div class=\"quiz-content\" *ngIf=\"getQuizData($vm) as quiz\">\n      <div class=\"quiz\">\n        <div class=\"question\">{{ quiz.question }}</div>\n        <ol class=\"options\" (click)=\"onRevealAnswer()\">\n          <li\n            class=\"option\"\n            [ngClass]=\"{\n              answer:\n                isQuizAnswer(quiz.options, option, quiz.answer) && revealAnswer\n            }\"\n            *ngFor=\"let option of quiz.options\"\n          >\n            {{ option }}\n          </li>\n        </ol>\n      </div>\n    </div>\n    <div class=\"content\">\n      <h1 class=\"title\">{{ $vm.currentSlide?.title }}</h1>\n      <ng-container\n        *ngFor=\"let contentItem of $vm.currentSlide?.contents; index as i\"\n      >\n        <ng-container *ngIf=\"contentItem.type === 'text'\">\n          <p [class]=\"contentItem.role\">{{ contentItem.content }}</p>\n        </ng-container>\n        <ng-container *ngIf=\"contentItem.type === 'list'\">\n          <ul>\n            <li *ngFor=\"let listItem of contentItem.items\">\n              {{ listItem.content }}\n            </li>\n          </ul>\n        </ng-container>\n        <ng-container *ngIf=\"contentItem.type === 'code'\">\n          <pre><code class=\"language-typescript\" [class]=\"'code'\">{{ contentItem.code }}</code></pre>\n        </ng-container>\n        <ng-container *ngIf=\"contentItem.type === 'question'\">\n          <button class=\"quiz-btn\" (click)=\"onShowQuiz()\">Quiz!</button>\n        </ng-container>\n        <ng-container *ngIf=\"contentItem.type === 'image'\">\n          <div class=\"img-wrap\">\n            <img\n              [src]=\"contentItem.src\"\n              [alt]=\"contentItem.alt\"\n              [class]=\"contentItem.class\"\n            />\n          </div>\n        </ng-container>\n      </ng-container>\n    </div>\n    <div class=\"counter\">{{ getSlideNumberText($vm) }}</div>\n  </div>\n</ng-container>\n"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "and finally our new reducers will look like this:"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "code": "import { DeckState } from 'src/types/presentation-deck';\n\nimport { createReducer, on } from '@ngrx/store';\n\nimport { deckActions } from './deck.actions';\n\nexport const initialDeckState: Readonly<DeckState> = {\n  currentSlide: null,\n  slides: [],\n};\n\nexport const DeckReducer = createReducer(\n  initialDeckState,\n  on(deckActions.slides.loadSuccess, (state, { payload }) => {\n    const newState: DeckState = {\n      ...state,\n      slides: payload,\n      currentSlide: payload[0],\n    };\n    return newState;\n  }),\n  on(deckActions.slides.increment, (state) => {\n    const newState: DeckState = { ...state }; // necessary as it is Readonly\n    // increment logic here\n    const currentIndex = state.slides.findIndex(\n      (slide) => slide.id === state.currentSlide?.id\n    );\n    const nextIndex = currentIndex + 1;\n    if (nextIndex < state.slides.length) {\n      newState.currentSlide = state.slides[nextIndex];\n    }\n    return newState;\n  }),\n  on(deckActions.slides.decrement, (state) => {\n    const newState: DeckState = { ...state };\n    // decrement logic here\n    const currentIndex = state.slides.findIndex(\n      (slide) => slide.id === state.currentSlide?.id\n    );\n    const nextIndex = currentIndex - 1;\n    if (nextIndex >= 0) {\n      newState.currentSlide = state.slides[nextIndex];\n    }\n    return newState;\n  })\n);\n"
+      }
+    ]
   }
 ]
