@@ -145,6 +145,11 @@ code {
   margin: 2em 0;
   font-weight: bold;
   color: #008a01;
+  user-select: text;
+  &::selection {
+    background-color: #e91e63;
+    color: wheat;
+  }
 }
 
 .img-wrap {
