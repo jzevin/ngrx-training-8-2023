@@ -501,6 +501,26 @@
       {
         "type": "text",
         "role": "subheading",
+        "content": "Clone the repo:"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "git clone https://github.com/jzevin/ngrx-training-8-2023.git"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "change the dir & install dependencies for the API and frontend:"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "cd ngrx-training-8-2023/api && npm i && cd ../fe && npm i"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
         "content": "add Ngrx & Redux DevTools"
       },
       {
@@ -562,6 +582,36 @@
         "type": "code",
         "language": "bash",
         "code": "import { StoreDevtoolsModule } from '@ngrx/store-devtools';\n\n  @NgModule({\n  declarations: [AppComponent, DeckComponent, NotFoundComponent],\n  imports: [\n    BrowserModule,\n    AppRoutingModule,\n    HttpClientModule,\n    StoreModule.forRoot({}),\n    StoreDevtoolsModule.instrument({\n      maxAge: 25, // Retains last 25 states\n      // logOnly: !isDevMode(), // Restrict extension to log-only mode\n      autoPause: true, // Pauses recording actions and state changes when the extension window is not open\n      trace: false, //  If set to true, will include stack trace for every dispatched action, so you can see it in trace tab jumping directly to that part of code\n      traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)\n    }),\n  ],\n  providers: [],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "finally start the API and frontend"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "cd ngrx-training-8-2023/api && npm run start\n\n# in a new terminal\n\ncd ngrx-training-8-2023/fe && ng serve"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "our Angular frontend should be running at:"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "http://localhost:4200"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "and our Express API Slides endpoint at:"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "http://localhost:3000/slides"
       }
     ]
   },
