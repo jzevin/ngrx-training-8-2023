@@ -1,10 +1,11 @@
-## Introduction (20 mins)
+## Introduction (15 mins)
 
+- The Presentation is The Project
 - What is state management and why it's useful
 - Brief history of Redux and NgRx
 - Key benefits of NgRx
 
-## Core Concepts Overview (40 mins)
+## Core Concepts Overview (30 mins)
 
 - Immutability
   - Definition and benefits
@@ -56,26 +57,20 @@
 - Migrate data load to effect
 - Refactor deck component to only use state and async pipe
 
-## Advanced Concepts (20 mins)
+## Advanced Concepts (10 mins)
 
-- Entity, router store, meta reducers
+- Router Store, Meta Reducers, Entity
 
 ## Best Practices (20 mins)
 
 - NgRx best practices
 
-## Conclusion (30 mins)
+## Conclusion (15 mins)
 
 - Play with it! Start small and simple
-- Do you own DD this is only an intro
 - Recap core concepts
 - Feature assignments
 - Q&A
-- Additional resources
-
----
-
----
 
 # Feature Assignments
 
