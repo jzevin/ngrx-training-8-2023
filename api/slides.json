@@ -316,6 +316,11 @@
             "type": "text",
             "role": "list-item",
             "content": "Registers reducers to handle state transitions"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Exposes the state as an observable and updates components when a new state is reduced"
           }
         ]
       },
@@ -386,7 +391,7 @@
           {
             "type": "text",
             "role": "list-item",
-            "content": "Pure functions defining state transitions"
+            "content": "Pure functions defining state transitions - pure functions that take current state + action and return new state"
           },
           {
             "type": "text",
@@ -440,6 +445,11 @@
             "type": "text",
             "role": "list-item",
             "content": "Parameterization and composition"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Provide memoization to avoid repeat computations"
           }
         ]
       },
@@ -487,6 +497,26 @@
         "type": "text",
         "role": "heading",
         "content": "Hands-On Core Concepts #1 - Conversion to NgRx Store"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "Clone the repo:"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "git clone https://github.com/jzevin/ngrx-training-8-2023.git"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "change the dir & install dependencies for the API and frontend:"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "cd ngrx-training-8-2023/api && npm i && cd ../fe && npm i"
       },
       {
         "type": "text",
@@ -552,6 +582,36 @@
         "type": "code",
         "language": "bash",
         "code": "import { StoreDevtoolsModule } from '@ngrx/store-devtools';\n\n  @NgModule({\n  declarations: [AppComponent, DeckComponent, NotFoundComponent],\n  imports: [\n    BrowserModule,\n    AppRoutingModule,\n    HttpClientModule,\n    StoreModule.forRoot({}),\n    StoreDevtoolsModule.instrument({\n      maxAge: 25, // Retains last 25 states\n      // logOnly: !isDevMode(), // Restrict extension to log-only mode\n      autoPause: true, // Pauses recording actions and state changes when the extension window is not open\n      trace: false, //  If set to true, will include stack trace for every dispatched action, so you can see it in trace tab jumping directly to that part of code\n      traceLimit: 75, // maximum stack trace frames to be stored (in case trace option was provided as true)\n    }),\n  ],\n  providers: [],\n  bootstrap: [AppComponent],\n})\nexport class AppModule {}\n"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "finally start the API and frontend"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "cd ngrx-training-8-2023/api && npm run start\n\n# in a new terminal\n\ncd ngrx-training-8-2023/fe && ng serve"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "our Angular frontend should be running at:"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "http://localhost:4200"
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "and our Express API Slides endpoint at:"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "http://localhost:3000/slides"
       }
     ]
   },
@@ -1230,6 +1290,325 @@
         "type": "code",
         "language": "typescript",
         "code": "import { DeckState } from 'src/types/presentation-deck';\n\nimport { createReducer, on } from '@ngrx/store';\n\nimport { deckActions } from './deck.actions';\n\nexport const initialDeckState: Readonly<DeckState> = {\n  currentSlide: null,\n  slides: [],\n};\n\nexport const DeckReducer = createReducer(\n  initialDeckState,\n  on(deckActions.slides.loadSuccess, (state, { payload }) => {\n    const newState: DeckState = {\n      ...state,\n      slides: payload,\n      currentSlide: payload[0],\n    };\n    return newState;\n  }),\n  on(deckActions.slides.increment, (state) => {\n    const newState: DeckState = { ...state }; // necessary as it is Readonly\n    // increment logic here\n    const currentIndex = state.slides.findIndex(\n      (slide) => slide.id === state.currentSlide?.id\n    );\n    const nextIndex = currentIndex + 1;\n    if (nextIndex < state.slides.length) {\n      newState.currentSlide = state.slides[nextIndex];\n    }\n    return newState;\n  }),\n  on(deckActions.slides.decrement, (state) => {\n    const newState: DeckState = { ...state };\n    // decrement logic here\n    const currentIndex = state.slides.findIndex(\n      (slide) => slide.id === state.currentSlide?.id\n    );\n    const nextIndex = currentIndex - 1;\n    if (nextIndex >= 0) {\n      newState.currentSlide = state.slides[nextIndex];\n    }\n    return newState;\n  })\n);\n"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "It is worth noting here that, from an optimization perspective, we can switch our component update strategy to OnPush now that all the data is coming through the view with an AsyncPipe. Using OnPush change detection will prevent unnecessary change detection cycles and improve performance."
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Advanced Concepts",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Advanced Concepts"
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Router Store"
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Router store contains the state of the Angular router in the NgRx store."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "It dispatches ROUTER_NAVIGATION actions to store history events, url, navigationId etc."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Selectors provide the router state and url. Can select query/url parameters."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Allows router to participate in state management. Can persist state across navigation."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Meta Reducers"
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Meta reducers are functions that take a reducer function and return a new reducer."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "They allow writing code that runs before/after each dispatched action is processed."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Use cases: logging, debugging, persisting state to localStorage etc."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "NgRx provides meta reducers for development tools, router store, storing rehydrated state."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Can compose multiple meta reducers by wrapping the previous meta reducer."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Entity"
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Entity is used to manage domain models in a normalized state. It provides adapter classes for managing collections of models."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "The entity state is normalized, storing models in a map by ID instead of arrays. This avoids duplication and makes lookups faster."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Entity adapters handle common CRUD operations like add/update/delete without needing explicit actions."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Selectors are provided for getting slices of entity state, filtering, sorting etc."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "title": "NgRx best practices",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "NgRx best practices"
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Structure state and reducers based on feature areas - Keeps state manageable and easier to find code."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Make state immutable by returning new copies - Avoids mutations that cause bugs."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Use selectors for reading state - Avoid spreading state to components."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Use effects for side effects - Keeps them isolated from components."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Use consistent and descriptive action types - Makes actions and effects more readable and traceable."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Dispatch one action for each effect - Keep effects simple and focused on one task."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Use router store to sync router state - Integrates router with state management."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Make effects idempotent - Avoids duplicate side effects if retried."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Use Entity for managing domain models - It provides normalized state and reusable CRUD operations."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Decouple state updates from component classes - Use actions/reducers instead of setters."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Load minimal data needed - Avoid large unfiltered selects, use entity memoization."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Use creator functions for complex actions - Keeps action types consistent and reusable."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Conclusion",
+    "contents": [
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "In Conclusion..."
+      },
+      {
+        "type": "text",
+        "role": "subheading",
+        "content": "When starting out with NgRx, it's best not to over complicate things. Jumping right into building a complex state management system for a large, real-world application can quickly become overwhelming."
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "Instead, take an incremental approach:"
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Start by setting up the basic store, actions, reducers."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Manage a small piece of state at first, like a user profile."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Add selectors, actions, and effects incrementally."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Avoid advanced concepts like router integration early on."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Build small demos and projects to experiment."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Focus on core principles like immutability first."
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Don't over-architect too early. Start simple."
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "The goal is to start small, get comfortable with the basics, and incrementally expand your knowledge. Once you have a handle on the core concepts, you can then start building more complex, real-world applications with NgRx."
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "The key is resist the urge to over-architect things too early. Stay focused on small pieces that illustrate the basics well. Learning NgRx takes time, but starting simple makes it much more approachable."
+      },
+      {
+        "type": "text",
+        "role": "heading",
+        "content": "Feature Assignments:"
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "I've left a few features/bugs out of the app for you to implement. Try to tackle them on your own by creating a feature branch from 'hands-on-5-add-ngrx-effects' and then submitting a PR to the repo."
+      },
+      {
+        "type": "text",
+        "role": "paragraph",
+        "content": "https://github.com/jzevin/ngrx-training-8-2023/tree/hands-on-5-add-ngrx-effects"
+      },
+      {
+        "type": "list",
+        "listType": "ordered",
+        "items": [
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Loading indicator"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Slides nav"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Fix router bug after our re-factor"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Move quiz data to state and refactor deck comp"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Add undo/redo functionality"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Secured routes"
+          },
+          {
+            "type": "text",
+            "role": "list-item",
+            "content": "Settings page with additional state slice"
+          }
+        ]
       }
     ]
   }
